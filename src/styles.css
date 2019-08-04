@@ -1,3 +1,155 @@
-div {
-  background-color: blue;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: default;
+  outline-style: none;
+}
+
+#root{
+  height:100vh;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(22, 160, 133);
+}
+
+.home{
+  display:grid;
+  width:50vw;
+  height:50vh;
+  grid-template-rows: 1fr  2fr;
+  
+}
+
+.header {
+  border: black solid 2px;
+  border-radius: 20px;
+  text-align: center;
+  margin-bottom: 5px;
+  padding-top:10px;
+}
+.container {
+  border-radius: 20px;
+  border:black solid 2px;
+  position:relative;
+}
+/*
+.flip {
+  position: absolute;
+  width:100%;
+  height:100%;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease;
+
+}
+*/
+.homeContent {
+  position: absolute;
+  width:100%;
+  height:100%;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: all 5s ease;
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.info {
+  text-align: center;
+}
+
+.gameOptions {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  align-self: stretch;
+  justify-self: stretch;
+  grid-gap: 4px;
+}
+
+.addition, .multiplication, .footer, .goHome {
+  outline-style: none;
+  background-color: white;
+  border-radius: 20px;
+  display: block;
+  cursor: pointer;
+  border:none;
+  margin: 4px;
+  font-size: 1rem;
+}
+.footer {
+  font-size: 0.8rem;
+  margin:0px;
+}
+.gameContent {
+  position: absolute;
+  width:100%;
+  height:100%;
+  backface-visibility: hidden;
+  transform:rotateX(180deg);
+  transform-style: preserve-3d;
+  transition: all 5s ease;  
+  display:grid;
+  grid-template-columns: 4fr 3fr;
+  grid-template-rows:1fr 10fr;
+  padding:5px;
+  grid-column-gap: 15px;
+}
+.game {
+  grid-row-start:2;
+  display:grid;
+  grid-template-rows:1fr 8fr 1fr;
+}
+.results {
+  grid-row-start: span 2;
+}
+
+.resultsHeader {
+  height:10%;
+  text-align: center;
+}
+
+.result {
+  height:90%;
+}
+
+.target {
+  text-align: center;
+  font-size:1.5rem;
+  line-height: 1.3rem;
+}
+
+.numbers {
+  display:grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.option {
+  outline-style: none;
+  background-color: white;
+  border-radius: 20px;
+  display: block;
+  cursor: pointer;
+  border:none;
+  margin: 4px;
+  font-size: 1.5rem;
+  color:black;
+}
+
+.timer {
+  text-align: center;
+  font-size:1.5rem;
+  line-height: 1.3rem;
+  animation: opacityPulse 1s ease-out infinite;
+  opacity: 1;
+  text-shadow: 2px 2px 5px black;
+}
+
+@keyframes opacityPulses {
+  0% {transform: scale(0.8); opacity: 0.8;}
+  50% {opacity: 1.0;}
+  100% {transform: scale(1); opacity: 1;}
 }

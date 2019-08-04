@@ -7,18 +7,15 @@ export default function App() {
   const startGame = option => {
     setGameOption(option)
   }
-
   return (
     <div className="home">
       <h1 className="header">NUMBERGAME</h1>
-      {!gameOption ? (
+      <div className="container">
         <Home startGame={startGame} />
-      ) : (
-        <>
-          <button onClick={() => setGameOption("")}>Go Home</button>
+        <div className="gameContent">
           <Game operation={gameOption} />
-        </>
-      )}
+        </div>
+      </div>
     </div>
   )
 }
