@@ -1,12 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>React</title>
-</head>
-<body>
-  <div id="root"></div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      window.particles = []
+      document.addEventListener("DOMContentLoaded", () => {
+        const root = document.querySelector("#root")
+        for (let i = 0; i < 10; i++) {
+          const particle = document.createElement("div")
+          particle.className = "particle"
+          //root.appendChild(particle)
+          const rndWidth = Math.ceil(Math.random() * 100)
+          const rndHeight = Math.ceil(Math.random() * 100)
+          particle.innerHTML = Math.ceil(Math.random() * 100)
+          const particleAnimation = particle.animate(
+            [
+              {
+                transform:
+                  "translate3D(" +
+                  Math.ceil(Math.random() * 100) +
+                  "vw, " +
+                  Math.ceil(Math.random() * 100) +
+                  "vh, 0)"
+              },
+              {
+                transform:
+                  "translate3D(" +
+                  Math.ceil(Math.random() * 100) +
+                  "vw, " +
+                  Math.ceil(Math.random() * 100) +
+                  "vh, 0)"
+              },
+              {
+                transform:
+                  "translate3D(" +
+                  Math.ceil(Math.random() * 100) +
+                  "vw, " +
+                  Math.ceil(Math.random() * 100) +
+                  "vh, 0)"
+              },
+              {
+                transform:
+                  "translate3D(" +
+                  Math.ceil(Math.random() * 100) +
+                  "vw, " +
+                  Math.ceil(Math.random() * 100) +
+                  "vh, 0)"
+              },
+              {
+                transform:
+                  "translate3D(" +
+                  Math.ceil(Math.random() * 100) +
+                  "vw, " +
+                  Math.ceil(Math.random() * 100) +
+                  "vh, 0)"
+              }
+            ],
+            {
+              duration: 5000,
+              iterations: Infinity,
+              direction: "alternate"
+            }
+          )
+          particles.push(particleAnimation)
+          document.body.appendChild(particle)
+        }
+      })
+    </script>
+  </body>
 </html>

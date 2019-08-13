@@ -117,6 +117,7 @@ export default function Game({ operation }) {
     console.log("go home")
     homeContentEl.style.transform = "rotateX(360deg)"
     gameContentEl.style.transform = "rotateX(180deg)"
+    window.particles.forEach(animation => animation.play())
     setGameStarted(false)
   }
 
