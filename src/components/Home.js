@@ -5,15 +5,12 @@ export default function Home({ startGame }) {
     const homeContentEl = document.querySelector(".homeContent")
     const gameContentEl = document.querySelector(".gameContent")
     const particles = document.querySelector(".particle")
-    console.log(particles)
-    particles.style = { "animation-play-state": "paused" }
-    console.log(particles.style.animationPlayState)
-    console.log(window.particles)
 
     homeContentEl.style.transform = "rotateX(180deg)"
     gameContentEl.style.transform = "rotateX(360deg)"
-    console.log(e.target.name)
-    window.particles.forEach(animation => animation.pause())
+    window.particles.forEach(particle => {
+      particle.cancel()
+    })
     startGame(e.target.name)
   }
 

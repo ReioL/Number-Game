@@ -8,14 +8,17 @@ export default function App() {
     setGameOption(option)
   }
   return (
-    <div className="home">
-      <h1 className="header">NUMBERGAME</h1>
-      <div className="container">
-        <Home startGame={startGame} />
-        <div className="gameContent">
-          <Game operation={gameOption} />
+    <>
+      <div className="home">
+        <h1 className="header">NUMBERGAME</h1>
+        <div className="container">
+          <Home startGame={startGame} />
+          <div className="gameContent">
+            <Game operation={gameOption} />
+          </div>
         </div>
       </div>
-    </div>
+      <div className="particleContainer"></div>
+    </>
   )
 }

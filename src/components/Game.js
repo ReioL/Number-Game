@@ -29,28 +29,39 @@ export default function Game({ operation }) {
   const [correctNumbers, setCorrectNumbers] = useState([])
   const [target, setTarget] = useState("?")
   const [clickedNumbers, setClickedNumbers] = useState([])
+  const [clickedNumbersIndexes, setClickedNumbersIndex] = useState([])
   const [results, setResult] = useState([])
   const [gameStarted, setGameStarted] = useState(false)
 
   const numberClicked = (e, index) => {
     const numberValue = numbers[index]
     const numbersClicked = [...clickedNumbers, numberValue]
+    const numbersClickedIndexes = [...clickedNumbersIndexes, index]
     setClickedNumbers(numbersClicked)
+    setClickedNumbersIndex(numbersClickedIndexes)
     let clickedNumbersSum = numbersClicked.reduce(
       (sum, nrIndex) => sum + nrIndex,
       0
     )
     if (clickedNumbersSum === target && numbersClicked.length === 4) {
       console.log("won")
-      setResult([...results, numbersClicked])
+      setResult([
+        ...results,
+        { res: 1, numbersClicked, correctNumbers, show: 0 }
+      ])
       setGameStarted(!gameStarted)
       setClickedNumbers([])
+      setClickedNumbersIndex([])
       setTime(10)
     } else if (clickedNumbersSum > target || numbersClicked.length >= 4) {
       console.log("lost wrong numbers")
-      setResult([...results, numbersClicked])
+      setResult([
+        ...results,
+        { res: 0, numbersClicked, correctNumbers, show: 0 }
+      ])
       setGameStarted(!gameStarted)
       setClickedNumbers([])
+      setClickedNumbersIndex([])
       setTime(10)
     }
   }
@@ -89,11 +100,16 @@ export default function Game({ operation }) {
   }, 1000)
 */
   useEffect(() => {
-    if (time === 0) {
+    if (time <= 0) {
       console.log("lost time went to 0")
-      setResult([...results, clickedNumbers])
+      setResult([
+        ...results,
+        { res: 0, numbersClicked: clickedNumbers, correctNumbers, show: 0 }
+      ])
+      console.log("results", results)
       setGameStarted(!gameStarted)
       setClickedNumbers([])
+      setClickedNumbersIndex([])
       setTime(10)
     }
   }, [time])
@@ -117,8 +133,28 @@ export default function Game({ operation }) {
     console.log("go home")
     homeContentEl.style.transform = "rotateX(360deg)"
     gameContentEl.style.transform = "rotateX(180deg)"
-    window.particles.forEach(animation => animation.play())
+    document.querySelectorAll(".particle").forEach(particle => {
+      //particle.style.top = "0px"
+      //particle.style.left = "0px"
+      particle.style = ""
+    })
+    window.particles.forEach(particle => particle.play())
+    setNumbers(Array(numberCount).fill("?"))
+    setTarget("?")
     setGameStarted(false)
+    setClickedNumbers([])
+    setClickedNumbersIndex([])
+    setTime(10)
+  }
+
+  const showRes = (e, ind) => {
+    console.log(ind)
+    const newResults = results.map((res, i) => {
+      console.log(res)
+      if (i === ind) return { ...res, show: !res.show }
+      return res
+    })
+    setResult(newResults)
   }
 
   console.log("game numbers", numbers)
@@ -137,9 +173,7 @@ export default function Game({ operation }) {
             return (
               <button
                 className="option"
-                disabled={
-                  !gameStarted || clickedNumbers.includes(numbers[index])
-                }
+                disabled={!gameStarted || clickedNumbersIndexes.includes(index)}
                 key={index}
                 onClick={e => numberClicked(e, index)}
               >
@@ -159,12 +193,41 @@ export default function Game({ operation }) {
       <div className="results">
         <div className="resultsHeader">Here are results</div>
         <div className="result">
-          {results.map((res, index) => {
-            console.log(res)
-            return <p key={index}>{res}</p>
-          })}
+          {results.map(
+            ({ res, numbersClicked, correctNumbers, show }, index) => {
+              const winlost = res === 1 ? "won" : "lost"
+              const ind = index + 1
+              const showResult = (
+                <div
+                  key={index}
+                  onClick={e => showRes(e, index)}
+                  className={res ? "lost" : "won"}
+                  style={{ margin: "2px" }}
+                >
+                  {show ? (
+                    <>
+                      <p>You selected {numbersClicked.join("-")}</p>
+                      <p>Correct are {correctNumbers.join("-")}</p>
+                    </>
+                  ) : (
+                    <p>
+                      Game {ind} {winlost}
+                    </p>
+                  )}
+                </div>
+              )
+
+              return showResult
+            }
+          )}
         </div>
       </div>
     </>
   )
 }
+/*<p key={index} onClick={e => showRes(e, index)}>
+                  {show
+                    ? `Selected ${numbersClicked.join("-")}
+                    Correct ${correctNumbers.join("-")}`
+                    : "Game " + ind + " " + winlost}
+                </p>*/
