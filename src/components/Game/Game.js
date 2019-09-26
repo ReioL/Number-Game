@@ -162,7 +162,7 @@ export default function Game({ operation }) {
   console.log("target", target)
 
   return (
-    <>
+    <div className="gameContent">
       <button className="goHome" onClick={goHome}>
         Go Home
       </button>
@@ -222,7 +222,7 @@ export default function Game({ operation }) {
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 /*<p key={index} onClick={e => showRes(e, index)}>

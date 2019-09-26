@@ -28,9 +28,9 @@
           let computedLeft = fromLeft-left
           console.log("top,left",top,left)
           console.log("comptop,compleft",computedTop,computedLeft)
-          particle.style.top=top+"px"
-          particle.style.left=left+"px"
-          particle.style.transform = "translate("+computedLeft+"px,"+computedTop+"px)"
+          particle.style.top=computedTop+"px"
+          particle.style.left=computedLeft+"px"
+          //particle.style.transform = "translate("+computedLeft+"px,"+computedTop+"px)"
           //particle.style.top = (mainDivHeight + -mainDivHeight * Math.cos((360 / numberOfParticles / 180) * i * Math.PI) + mainDivHeight*0.2+'px')
           //particle.style.left = (mainDivWidth + mainDivWidth * Math.sin((360 / numberOfParticles / 180) * i * Math.PI) + mainDivWidth*0.2 +'px')
           //particle.style.marginTop = "-25px"
