@@ -21,10 +21,8 @@ export default function GameOptions({ startGame }) {
 
   return (
     <div className="gameOptions">
-      <Addition gameSelectionHandler={gameSelectionHandler}></Addition>
-      <Multiplication
-        gameSelectionHandler={gameSelectionHandler}
-      ></Multiplication>
+      <Addition gameSelectionHandler={gameSelectionHandler} />
+      <Multiplication gameSelectionHandler={gameSelectionHandler} />
     </div>
   )
 }

@@ -20,7 +20,7 @@ function useInterval(callback, delay) {
   }, [delay])
 }
 
-export default function Game({ operation }) {
+export default function GameContent({ operation }) {
   const [time, setTime] = useState(10)
   const [minNumber, setMinNumber] = useState(5)
   const [maxNumber, setMaxNumber] = useState(15)

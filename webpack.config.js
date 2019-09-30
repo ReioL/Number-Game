@@ -20,12 +20,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.css$/,
-          use: [
-            argv.mode === "development"
-              ? "style-loader"
-              : MiniCssExtractPlugin.loader,
-            "css-loader"
-          ]
+          use: [argv.mode === "development" ? "style-loader" : MiniCssExtractPlugin.loader, "css-loader"]
         },
         {
           test: /\.(png|svg|jpg|gif)$/,

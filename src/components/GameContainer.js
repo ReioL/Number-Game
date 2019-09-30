@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import Home from "./Home"
-import Game from "./Game"
+import HomeContent from "./HomeContent"
+import GameContent from "./GameContent"
+
 export default function GameContainer() {
   const [gameOption, setGameOption] = useState("")
 
@@ -9,8 +10,8 @@ export default function GameContainer() {
   }
   return (
     <div className="container">
-      <Home startGame={startGame} />
-      <Game operation={gameOption} />
+      <HomeContent startGame={startGame} />
+      <GameContent operation={gameOption} />
     </div>
   )
 }
