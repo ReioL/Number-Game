@@ -130,7 +130,7 @@ body {
   display: grid;
   grid-template-rows: 1fr 8fr 1fr;
 }
-.results {
+.resultsContainer {
   grid-row-start: span 2;
 }
 
@@ -139,7 +139,7 @@ body {
   text-align: center;
 }
 
-.result {
+.results {
   height: 90%;
   overflow: auto;
   font-size: 0.8rem;
@@ -230,10 +230,10 @@ body {
   }
 }
 
-.won {
+.lost {
   background-color: red;
 }
 
-.lost {
+.won {
   background-color: green;
 }

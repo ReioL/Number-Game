@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react"
+import GoHome from "./GoHome"
+import Game from "./Game"
+import Results from "./Results"
 
+/*custom hook for interval
 function useInterval(callback, delay) {
   const savedCallback = useRef()
 
@@ -19,6 +23,7 @@ function useInterval(callback, delay) {
     }
   }, [delay])
 }
+*/
 
 export default function GameContent({ operation }) {
   const [time, setTime] = useState(10)
@@ -39,37 +44,22 @@ export default function GameContent({ operation }) {
     const numbersClickedIndexes = [...clickedNumbersIndexes, index]
     setClickedNumbers(numbersClicked)
     setClickedNumbersIndex(numbersClickedIndexes)
-    let clickedNumbersSum = numbersClicked.reduce(
-      (sum, nrIndex) => sum + nrIndex,
-      0
-    )
+    const clickedNumbersSum = numbersClicked.reduce((sum, nrIndex) => sum + nrIndex, 0)
     if (clickedNumbersSum === target && numbersClicked.length === 4) {
       console.log("won")
-      setResult([
-        ...results,
-        { res: 1, numbersClicked, correctNumbers, show: 0 }
-      ])
-      setGameStarted(!gameStarted)
-      setClickedNumbers([])
-      setClickedNumbersIndex([])
-      setTime(10)
+      setResult([...results, { res: 1, numbersClicked, correctNumbers }])
+      resetGame()
     } else if (clickedNumbersSum > target || numbersClicked.length >= 4) {
       console.log("lost wrong numbers")
-      setResult([
-        ...results,
-        { res: 0, numbersClicked, correctNumbers, show: 0 }
-      ])
-      setGameStarted(!gameStarted)
-      setClickedNumbers([])
-      setClickedNumbersIndex([])
-      setTime(10)
+      setResult([...results, { res: 0, numbersClicked, correctNumbers }])
+      resetGame()
     }
   }
 
   const shuffle = numbers => {
     for (let i = numbers.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1))
-      let temp = numbers[i]
+      const j = Math.floor(Math.random() * (i + 1))
+      const temp = numbers[i]
       numbers[i] = numbers[j]
       numbers[j] = temp
     }
@@ -77,19 +67,17 @@ export default function GameContent({ operation }) {
   }
 
   const getNumbers = () => {
-    let gameNumbers = []
-    let correctNumbers = []
-    for (var i = 0; i < numberCount; i++) {
+    const gameNumbers = []
+    const selectCorrectNumbers = []
+    for (let i = 0; i < numberCount; i += 1) {
       //get numbers between min number and max number and min, max are included
-      gameNumbers.push(
-        Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber
-      )
+      gameNumbers.push(Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber)
     }
     //get 4 numbers to be the correct result
-    correctNumbers.push(...gameNumbers.slice(0, 4))
-    setCorrectNumbers(correctNumbers)
+    selectCorrectNumbers.push(...gameNumbers.slice(0, 4))
+    setCorrectNumbers(selectCorrectNumbers)
     //sum first 4 numbers to get target
-    setTarget(correctNumbers.reduce((sum, num) => sum + num))
+    setTarget(selectCorrectNumbers.reduce((sum, num) => sum + num))
     //shuffle numbers for display
     setNumbers(shuffle(gameNumbers))
   }
@@ -102,15 +90,9 @@ export default function GameContent({ operation }) {
   useEffect(() => {
     if (time <= 0) {
       console.log("lost time went to 0")
-      setResult([
-        ...results,
-        { res: 0, numbersClicked: clickedNumbers, correctNumbers, show: 0 }
-      ])
+      setResult([...results, { res: 0, numbersClicked: clickedNumbers, correctNumbers }])
       console.log("results", results)
-      setGameStarted(!gameStarted)
-      setClickedNumbers([])
-      setClickedNumbersIndex([])
-      setTime(10)
+      resetGame()
     }
   }, [time])
 
@@ -127,6 +109,15 @@ export default function GameContent({ operation }) {
     setGameStarted(!gameStarted)
   }
 
+  const resetGame = () => {
+    //setNumbers(Array(numberCount).fill("?"))
+    //setTarget("?")
+    setGameStarted(false)
+    setClickedNumbers([])
+    setClickedNumbersIndex([])
+    setTime(10)
+  }
+
   const goHome = () => {
     const homeContentEl = document.querySelector(".homeContent")
     const gameContentEl = document.querySelector(".gameContent")
@@ -139,22 +130,7 @@ export default function GameContent({ operation }) {
       particle.style = ""
     })
     window.particles.forEach(particle => particle.play())
-    setNumbers(Array(numberCount).fill("?"))
-    setTarget("?")
-    setGameStarted(false)
-    setClickedNumbers([])
-    setClickedNumbersIndex([])
-    setTime(10)
-  }
-
-  const showRes = (e, ind) => {
-    console.log(ind)
-    const newResults = results.map((res, i) => {
-      console.log(res)
-      if (i === ind) return { ...res, show: !res.show }
-      return res
-    })
-    setResult(newResults)
+    resetGame()
   }
 
   console.log("game numbers", numbers)
@@ -163,65 +139,17 @@ export default function GameContent({ operation }) {
 
   return (
     <div className="gameContent">
-      <button className="goHome" onClick={goHome}>
-        Go Home
-      </button>
-      <div className="game">
-        <div className="target">{target}</div>
-        <div className="numbers">
-          {numbers.map((number, index) => {
-            return (
-              <button
-                className="option"
-                disabled={!gameStarted || clickedNumbersIndexes.includes(index)}
-                key={index}
-                onClick={e => numberClicked(e, index)}
-              >
-                {number}
-              </button>
-            )
-          })}
-        </div>
-        {gameStarted ? (
-          <div className="timer">{time}</div>
-        ) : (
-          <button className="footer" onClick={startGame}>
-            START!!!
-          </button>
-        )}
-      </div>
-      <div className="results">
-        <div className="resultsHeader">Here are results</div>
-        <div className="result">
-          {results.map(
-            ({ res, numbersClicked, correctNumbers, show }, index) => {
-              const winlost = res === 1 ? "won" : "lost"
-              const ind = index + 1
-              const showResult = (
-                <div
-                  key={index}
-                  onClick={e => showRes(e, index)}
-                  className={res ? "lost" : "won"}
-                  style={{ margin: "2px" }}
-                >
-                  {show ? (
-                    <>
-                      <p>You selected {numbersClicked.join("-")}</p>
-                      <p>Correct are {correctNumbers.join("-")}</p>
-                    </>
-                  ) : (
-                    <p>
-                      Game {ind} {winlost}
-                    </p>
-                  )}
-                </div>
-              )
-
-              return showResult
-            }
-          )}
-        </div>
-      </div>
+      <GoHome goHome={goHome} />
+      <Game
+        numbers={numbers}
+        target={target}
+        gameStarted={gameStarted}
+        time={time}
+        startGame={startGame}
+        clickedNumbersIndexes={clickedNumbersIndexes}
+        numberClicked={numberClicked}
+      />
+      <Results results={results} />
     </div>
   )
 }
