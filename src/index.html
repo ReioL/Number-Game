@@ -2,105 +2,11 @@
 <html lang="en">
   <head>
   <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>React</title>
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      window.particles = []
-      
-      document.addEventListener("DOMContentLoaded", () => {
-        const arrangeDivs = () => {
-        let particleArray = document.querySelectorAll(".particle")
-        //let particleContainer = document.querySelector(".particleContainer")
-        //particleContainer.append(...particleArray)
-        let mainDivHeight = document.querySelector(".particleContainer").clientHeight * 0.8 /2
-        let mainDivWidth = document.querySelector(".particleContainer").clientWidth * 0.8 /2
-        let numberOfParticles = 20
-        particleArray.forEach((particle,i) => {
-          let fromTop = (mainDivHeight + -mainDivHeight * Math.cos((360 / numberOfParticles / 180) * i * Math.PI) + mainDivHeight*0.2)
-          let fromLeft = (mainDivWidth + mainDivWidth * Math.sin((360 / numberOfParticles / 180) * i * Math.PI) + mainDivWidth*0.2)
-          let top = particle.getBoundingClientRect().top
-          let left = particle.getBoundingClientRect().left
-          let computedTop = fromTop-top
-          let computedLeft = fromLeft-left
-          console.log("top,left",top,left)
-          console.log("comptop,compleft",computedTop,computedLeft)
-          particle.style.top=computedTop+"px"
-          particle.style.left=computedLeft+"px"
-          //particle.style.transform = "translate("+computedLeft+"px,"+computedTop+"px)"
-          //particle.style.top = (mainDivHeight + -mainDivHeight * Math.cos((360 / numberOfParticles / 180) * i * Math.PI) + mainDivHeight*0.2+'px')
-          //particle.style.left = (mainDivWidth + mainDivWidth * Math.sin((360 / numberOfParticles / 180) * i * Math.PI) + mainDivWidth*0.2 +'px')
-          //particle.style.marginTop = "-25px"
-          //particle.style.marginLeft = "-25px"
-        })
-        
-        }
-        let button = document.querySelector(".addition")
-        button.addEventListener("click",arrangeDivs)
-        const root = document.querySelector(".particleContainer")
-        for (let i = 0; i < 20; i++) {
-          const particle = document.createElement("div")
-          particle.className = "particle"
-          //root.appendChild(particle)
-          particle.innerHTML = Math.ceil(Math.random() * 99)
-          const particleAnimation = particle.animate(
-            [
-              {
-                transform:
-                "translate3D(calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vw - 50px), calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vh - 50px), 0)"
-              },
-              {
-                transform:
-                "translate3D(calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vw - 50px), calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vh - 50px), 0)"
-              },
-              {
-                transform:
-                "translate3D(calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vw - 50px), calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vh - 50px), 0)"
-              },
-              {
-                transform:
-                "translate3D(calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vw - 50px), calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vh - 50px), 0)"
-              },
-              {
-                transform:
-                  "translate3D(calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vw - 50px), calc(" +
-                  Math.ceil(Math.random() * 100) +
-                  "vh - 50px), 0)"
-              }
-            ],
-            {
-              duration: 10000,
-              iterations: Infinity,
-              direction: "alternate"
-            }
-          )
-          particles.push(particleAnimation)
-          //document.body.appendChild(particle)
-          root.appendChild(particle)
-        }
-      })
-      
-    </script>
   </body>
 </html>

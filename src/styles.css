@@ -4,9 +4,21 @@
   padding: 0;
   cursor: default;
   outline-style: none;
+  user-select: none;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+  
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 15px;
+  background-color: rgba(146, 146, 146,0.8);
+  
+} 
 body {
   overflow: hidden;
+  
 }
 #root {
   height: 100vh;
@@ -128,15 +140,19 @@ body {
 .game {
   grid-row-start: 2;
   display: grid;
-  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-rows: 25px auto 30px;
+  overflow: auto;
 }
 .resultsContainer {
   grid-row-start: span 2;
+  display: grid;
+  grid-template-rows: 25px auto;
 }
 
 .resultsHeader {
-  height: 10%;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .results {
@@ -149,6 +165,7 @@ body {
   text-align: center;
   font-size: 1.5rem;
   line-height: 1.3rem;
+  border-radius:20px;
 }
 
 .numbers {
@@ -178,7 +195,7 @@ body {
 
 .timer {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   line-height: 1.3rem;
   animation: opacityPulse 1s ease-out infinite;
   opacity: 1;
@@ -213,7 +230,7 @@ body {
   width: 50px;
   background-color: transparent;
   position: fixed;
-  transition: all 2s ease;
+  /* transition: transform 2s ease; */
   /*animation: shoots 3s ease-out;*/
   top: 0;
   left: 0;
@@ -236,4 +253,68 @@ body {
 
 .won {
   background-color: green;
+}
+
+.lost, .won {
+  margin:2px;
+}
+@media all and (max-width: 600px) {
+
+  .app {
+    display: grid;
+    width: 95vw;
+    height: 95vh;
+    grid-template-rows: 1fr 4fr;
+    z-index: 2;
+  }
+  .gameOptions {
+    display: grid;
+    grid-template-columns:1fr;
+    grid-template-rows: 1fr 1fr;
+    align-self: stretch;
+    justify-self: stretch;
+    grid-gap: 4px;
+  }
+  .gameContent {
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 40px auto;
+  }
+  .resultsContainer {
+    grid-row: 2 / -1; 
+    grid-template-rows: 40px auto;
+    grid-column:1;
+    overflow:auto;
+  }
+  .game {
+    grid-row-start: 3;
+    grid-column-start:1;
+  }
+  .resultsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .resultsHeader > img {
+    cursor: pointer;
+    user-select: none;
+    height:40px;
+    margin-left:7px;
+  }
+  .results {
+    height: 0%;
+    overflow: auto;
+    font-size: 0.8rem;
+    background: linear-gradient(rgb(255, 174, 0), yellow);
+    border-radius: 20px;
+    transition:0.5s;
+  }
+  .showResults {
+    height:100%;
+  }
+  .lost, .won {
+    margin:5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
 }

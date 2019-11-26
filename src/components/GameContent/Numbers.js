@@ -1,6 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 
-export default function Numbers({ gameStarted, numbers, clickedNumbersIndexes, numberClicked }) {
+export default function Numbers({ gameStarted, numbers, clickedNumbersIndexes, numberClick }) {
+  const [clickedButtons, setClickedButtons] = useState([])
+
+  const addIndex = index => {
+    numberClick(index)
+    setClickedButtons([...clickedButtons, index])
+  }
   return (
     <div className="numbers">
       {numbers.map((number, index) => {
@@ -11,7 +17,7 @@ export default function Numbers({ gameStarted, numbers, clickedNumbersIndexes, n
             disabled={!gameStarted || clickedNumbersIndexes.includes(index)}
             // eslint-disable-next-line react/no-array-index-key
             key={index}
-            onClick={e => numberClicked(e, index)}
+            onClick={() => addIndex(index)}
           >
             {number}
           </button>
